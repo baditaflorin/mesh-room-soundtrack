@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  MeshNameInput,
   MeshToasts,
   pushToast,
   useEventLog,
@@ -135,15 +136,13 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
           {log.size} queued · {present} {present === 1 ? "peer" : "peers"}
         </p>
       </header>
-      <div className="track-name">
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="your name"
-          maxLength={48}
-          aria-label="your name"
-        />
-      </div>
+      <MeshNameInput
+        className="track-name"
+        value={name}
+        onChange={setName}
+        placeholder="your name"
+        maxLength={48}
+      />
       <div className="track-submit-row">
         <input
           className="track-input-title"
