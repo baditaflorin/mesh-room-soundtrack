@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import {
   MeshNameInput,
   MeshToasts,
+  SafeLink,
   pushToast,
+  safeUrl,
   useEventLog,
   useNamedPeer,
   type MeshConfig,
@@ -91,7 +93,7 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
   };
 
   const present = room.peerCount + 1;
-  const isHttp = (u?: string) => !!u && /^https?:\/\//.test(u);
+  const isHttp = (u?: string) => !!u && !!safeUrl(u, { allowSchemes: ["http:", "https:"] });
 
   const row = (t: Track) => {
     const mine = t.peerId === room.peerId;
@@ -179,9 +181,9 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
             {isHttp(now.url) && (
               <>
                 {" · "}
-                <a href={now.url} target="_blank" rel="noopener noreferrer">
+                <SafeLink href={now.url} allowSchemes={["http:", "https:"]}>
                   open ↗
-                </a>
+                </SafeLink>
               </>
             )}
           </div>
