@@ -1,7 +1,7 @@
 # mesh-room-soundtrack
 
 [![pages](https://img.shields.io/badge/live-baditaflorin.github.io%2Fmesh-room-soundtrack-9d6dff)](https://baditaflorin.github.io/mesh-room-soundtrack/)
-[![version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/baditaflorin/mesh-room-soundtrack/blob/main/package.json)
+[![version](https://img.shields.io/badge/version-0.1.1-blue)](https://github.com/baditaflorin/mesh-room-soundtrack/blob/main/package.json)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
 > Democratic room playlist: any peer queues, peers upvote, top is now playing.
