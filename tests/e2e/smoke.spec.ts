@@ -39,9 +39,11 @@ async function openSettings(page: Page): Promise<Locator> {
   if (await isVisible(legacyDrawer)) return legacyDrawer;
 
   await page.getByLabel("Open settings").click();
-  if (await isVisible(dialog)) return dialog;
-  await expect(legacyDrawer).toBeVisible();
-  return legacyDrawer;
+  // Radix mounts the portal on the following frame. Waiting for the modern
+  // dialog avoids turning a successful click into a legacy-selector race on
+  // a slower Linux CI browser.
+  await expect(dialog).toBeVisible();
+  return dialog;
 }
 
 /**

@@ -555,6 +555,52 @@ a:focus-visible {
   line-height: 1.45;
 }
 
+/* A short landscape laptop should still land the shared action in the first
+ * frame. Keep the roomy default for taller desktops, then tighten only the
+ * vertical rhythm when viewport height—not product density—demands it. */
+@media (min-width: 48.0625rem) and (max-height: 42rem) {
+  .soundtrack-page {
+    padding-top: 0.35rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .soundtrack-hero {
+    padding-bottom: 0.64rem;
+  }
+
+  .soundtrack-hero h1 {
+    font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  }
+
+  .track-composer {
+    padding: 0.72rem;
+  }
+
+  .track-composer-heading {
+    margin-bottom: 0.58rem;
+  }
+
+  .track-submit-row {
+    gap: 0.42rem;
+  }
+
+  .track-name .mesh-name-input-field,
+  .track-field input {
+    min-height: 2.38rem;
+    padding: 0.48rem 0.66rem;
+  }
+
+  .track-source-details summary {
+    min-height: 2.2rem;
+    padding-block: 0.42rem;
+  }
+
+  .track-submit {
+    min-height: 2.5rem;
+    margin-top: 0;
+  }
+}
+
 @media (max-width: 48rem) {
   .soundtrack-workspace {
     grid-template-areas:
@@ -571,6 +617,7 @@ a:focus-visible {
 
 @media (max-width: 31rem) {
   .soundtrack-page {
+    padding-top: 0.32rem;
     padding-inline: 0.72rem;
   }
 
@@ -631,6 +678,18 @@ a:focus-visible {
     padding-top: 0.58rem;
     padding-bottom: 0.66rem;
     font-size: 0.7rem;
+  }
+
+  .track-composer {
+    padding: 0.86rem;
+  }
+
+  .track-composer-heading {
+    margin-bottom: 0.68rem;
+  }
+
+  .track-submit {
+    margin-top: 0;
   }
 
   .track-submit-row {
