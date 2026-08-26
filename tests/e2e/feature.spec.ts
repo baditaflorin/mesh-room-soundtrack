@@ -16,7 +16,7 @@ test("alice queues a track → bob sees it in now-playing", async ({ browser, ba
 
     await a.getByPlaceholder("title").fill("Mesh Anthem");
     await a.getByPlaceholder("artist").fill("Various Peers");
-    await a.getByRole("button", { name: "queue it", exact: true }).click();
+    await a.getByRole("button", { name: "Add to queue", exact: true }).click();
 
     await expect(b.locator(".track-now")).toContainText("Mesh Anthem");
     await expect(b.locator(".track-now")).toContainText("Various Peers");
@@ -37,14 +37,14 @@ test("bob's upvote re-ranks the playlist → alice sees the new top track", asyn
     await a.waitForTimeout(500);
 
     // Alice queues two tracks. The first one queued sorts to the top (tie-break
-    // on ts), so it becomes "now playing" with zero votes.
+    // on ts), so it becomes the shared top of queue with zero votes.
     await a.getByPlaceholder("title").fill("First Track");
     await a.getByPlaceholder("artist").fill("Band A");
-    await a.getByRole("button", { name: "queue it", exact: true }).click();
+    await a.getByRole("button", { name: "Add to queue", exact: true }).click();
     await a.waitForTimeout(150);
     await a.getByPlaceholder("title").fill("Second Track");
     await a.getByPlaceholder("artist").fill("Band B");
-    await a.getByRole("button", { name: "queue it", exact: true }).click();
+    await a.getByRole("button", { name: "Add to queue", exact: true }).click();
 
     // Both peers agree on the initial ranking: First Track is on top.
     await expect(a.locator(".track-now-title")).toHaveText("First Track");

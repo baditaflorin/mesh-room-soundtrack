@@ -1,10 +1,10 @@
-# mesh-room-soundtrack
+# Room Soundtrack
 
-[![pages](https://img.shields.io/badge/live-baditaflorin.github.io%2Fmesh-room-soundtrack-9d6dff)](https://baditaflorin.github.io/mesh-room-soundtrack/)
+[![pages](https://img.shields.io/badge/live-baditaflorin.github.io%2Fmesh-room-soundtrack-f0ba64)](https://baditaflorin.github.io/mesh-room-soundtrack/)
 [![version](https://img.shields.io/badge/version-0.1.1-blue)](https://github.com/baditaflorin/mesh-room-soundtrack/blob/main/package.json)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
-> Democratic room playlist: any peer queues, peers upvote, top is now playing.
+> A democratic shared listening queue. People add tracks, vote together, and agree on what comes next.
 
 **Live → https://baditaflorin.github.io/mesh-room-soundtrack/**
 
@@ -14,17 +14,19 @@
 
 ---
 
-![screenshot](docs/screenshot.png)
+![Room Soundtrack screenshot](docs/screenshot.png)
 
-> Two peers, side-by-side, in the same room. Drop a `tests/demo/scenario.mjs`
-> exporting `default async (a, b) => …` and run `npm run demo` to regenerate
-> `docs/preview.png` plus `docs/demo-a.webm` / `docs/demo-b.webm` clips.
+> Two peers, side-by-side, in the same room. The checked-in
+> `tests/demo/scenario.mjs` adds tracks and promotes one through a real remote
+> vote. Run `npm run demo` to regenerate `docs/preview.png` and `docs/demo.gif`.
 
-![preview](docs/preview.png)
+![Two-peer shared queue preview](docs/preview.png)
 
 ## What it is
 
-A **rootless-computing** peer-to-peer browser app. No backend of its own beyond the self-hosted WebRTC stack listed below. State lives in a Yjs mesh shared by everyone in the same room.
+A **rootless-computing** peer-to-peer browser app. No backend of its own beyond the self-hosted WebRTC stack listed below. The queue, votes, and contributor names live in a Yjs mesh shared by everyone in the same room.
+
+Room Soundtrack deliberately coordinates the selection rather than pretending to control audio. A source URL is an optional safe link; it opens only when a person chooses it in their own browser, which keeps browser gesture and media-permission behavior truthful.
 
 Read the principles → **https://baditaflorin.github.io/rootless-computing/principles.html**
 
@@ -43,6 +45,14 @@ npm run dev
 ```
 
 `mesh-common` must sit as a **sibling** directory because `package.json` references it via `file:../mesh-common`.
+
+## How a room settles the next track
+
+1. Give the room a name in Settings or join through the invite link.
+2. Add a title and artist; optionally attach an `http:` or `https:` source link.
+3. Every other peer can upvote or downvote that pick. The highest scoring track is the shared top of queue; ties retain their original queue order.
+
+The owner of a track cannot vote on their own pick. This keeps the order genuinely group-shaped without inventing a host or a playback authority.
 
 ## Self-hosted infrastructure
 
@@ -78,7 +88,11 @@ GitHub Pages serves the committed `docs/` directory on the `main` branch. There 
 ```bash
 npm run smoke                                    # build + sanity-check docs/
 bash ../mesh-common/scripts/screenshot-app.sh    # regenerate docs/screenshot.png
+bash ../mesh-common/scripts/record-demo.sh       # regenerate docs/preview.png + docs/demo.gif
+npm run audit:security                           # regenerate docs/security-audit.{md,json}
 ```
+
+**Security audit → [docs/security-audit.md](./docs/security-audit.md)**
 
 ## Privacy
 
