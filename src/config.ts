@@ -2,6 +2,7 @@ import { createMeshConfig } from "@baditaflorin/mesh-common";
 
 export const config = createMeshConfig({
   appName: "mesh-room-soundtrack",
+  breadcrumbs: false,
   displayName: "Room Soundtrack",
   visualProfile: "gather",
   shellLayout: "inset",
