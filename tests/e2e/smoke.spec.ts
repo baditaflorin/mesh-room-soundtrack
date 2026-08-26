@@ -5,12 +5,24 @@ function settingsDialog(page: Page): Locator {
   return page.getByRole("dialog", { name: "Settings" });
 }
 
-function legacySettingsDrawer(page: Page): Locator {
-  return page.locator(".mesh-settings-drawer, .settings-drawer").first();
-}
-
 async function isVisible(locator: Locator): Promise<boolean> {
   return locator.isVisible().catch(() => false);
+}
+
+/**
+ * The app bar is interactive only after the shell's mount effect has applied
+ * its semantic accent token. That is a real ready-state signal—not a timing
+ * delay—and prevents a cold CI navigation from clicking a pre-effect shell.
+ */
+async function readyShell(page: Page): Promise<Locator> {
+  const shell = page.locator("[data-mesh-app-shell]").first();
+  await expect(shell).toBeVisible();
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.style.getPropertyValue("--mesh-accent").trim()),
+    )
+    .toMatch(/^#[\da-f]{3,8}$/i);
+  return shell;
 }
 
 /**
@@ -35,13 +47,14 @@ async function openSettings(page: Page): Promise<Locator> {
   const dialog = settingsDialog(page);
   if (await isVisible(dialog)) return dialog;
 
-  const legacyDrawer = legacySettingsDrawer(page);
-  if (await isVisible(legacyDrawer)) return legacyDrawer;
-
-  await page.getByLabel("Open settings").click();
-  // Radix mounts the portal on the following frame. Waiting for the modern
-  // dialog avoids turning a successful click into a legacy-selector race on
-  // a slower Linux CI browser.
+  const shell = await readyShell(page);
+  const trigger = shell.getByRole("button", { name: "Open settings" });
+  await expect(trigger).toBeVisible();
+  await expect(trigger).toBeEnabled();
+  await trigger.click();
+  // The dialog is the actual accessible shell surface. Waiting on it keeps
+  // the test tied to the product's user-visible state, not an implementation
+  // class or a fixed mount delay.
   await expect(dialog).toBeVisible();
   return dialog;
 }
