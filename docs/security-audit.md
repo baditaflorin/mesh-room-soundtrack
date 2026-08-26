@@ -1,6 +1,6 @@
 # Security audit — mesh-room-soundtrack
 
-Generated: **2026-08-26T02:38:08.112Z** · 16 checks · 16 pass · 0 fail
+Generated: **2026-08-26T02:49:39.359Z** · 16 checks · 16 pass · 0 fail
 
 > A programmatic, CPU-only verification of every claim in the four-layer security stack.
 > Re-run with `npm run audit:security` from this repo. Source: `mesh-common/tests/securityAudit.test.ts`
@@ -43,8 +43,8 @@ Selected captured evidence (full payloads in `security-audit.json`):
 
 ```json
 {
-  "pubkeyA": "97ec8c167d562d7e1f30279ce4a6e7b0295af5fabbd3a8942301ddefffea71f6",
-  "pubkeyB": "97ec8c167d562d7e1f30279ce4a6e7b0295af5fabbd3a8942301ddefffea71f6"
+  "pubkeyA": "b7017ef3011aef8efce762a2d58faede397a93a1cc5ba2f8aa5cc6bb0ac37e2f",
+  "pubkeyB": "b7017ef3011aef8efce762a2d58faede397a93a1cc5ba2f8aa5cc6bb0ac37e2f"
 }
 ```
 
@@ -52,8 +52,8 @@ Selected captured evidence (full payloads in `security-audit.json`):
 
 ```json
 {
-  "pubkeyA": "aec5e296ff016bfb",
-  "pubkeyB": "cf31befb7599bb81"
+  "pubkeyA": "70ec8418449973ca",
+  "pubkeyB": "b92b15e25b35646e"
 }
 ```
 
@@ -70,8 +70,8 @@ Selected captured evidence (full payloads in `security-audit.json`):
 
 ```json
 {
-  "plantedExpiresAt": 1787711828105,
-  "now": 1787711888108
+  "plantedExpiresAt": 1787712519353,
+  "now": 1787712579355
 }
 ```
 
@@ -79,8 +79,8 @@ Selected captured evidence (full payloads in `security-audit.json`):
 
 ```json
 {
-  "realPubkey": "eb140f073b0d20a5",
-  "forgerPubkey": "b3550e39f4eadd0c"
+  "realPubkey": "666f575c77b6dda5",
+  "forgerPubkey": "69350b0e3eb1b001"
 }
 ```
 
@@ -98,7 +98,7 @@ Selected captured evidence (full payloads in `security-audit.json`):
 ```json
 {
   "sigLen": 128,
-  "pubkeyPrefix": "7798cafcd4f2d341"
+  "pubkeyPrefix": "f89c83d5211b0591"
 }
 ```
 
@@ -106,7 +106,7 @@ Selected captured evidence (full payloads in `security-audit.json`):
 
 ```json
 {
-  "fingerprint": "a7-30-32-1a"
+  "fingerprint": "b9-a3-d2-d5"
 }
 ```
 
@@ -114,7 +114,7 @@ Selected captured evidence (full payloads in `security-audit.json`):
 
 ```json
 {
-  "peerId": "d3ea680a296047f4"
+  "peerId": "427cc8fc19a4b7ce"
 }
 ```
 
@@ -123,7 +123,7 @@ Selected captured evidence (full payloads in `security-audit.json`):
 ```json
 {
   "peerId": "alice",
-  "pubkeyPrefix": "e56000befa13d027",
+  "pubkeyPrefix": "0765321de542f765",
   "sigLen": 128
 }
 ```
@@ -132,8 +132,8 @@ Selected captured evidence (full payloads in `security-audit.json`):
 
 ```json
 {
-  "forgedPubkey": "35eb7240ee3a150a",
-  "realPubkey": "96a8a728a1fa95fe"
+  "forgedPubkey": "85cf7da368f5a4b7",
+  "realPubkey": "6a13b7e3bb53f58f"
 }
 ```
 
