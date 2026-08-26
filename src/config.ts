@@ -2,8 +2,12 @@ import { createMeshConfig } from "@baditaflorin/mesh-common";
 
 export const config = createMeshConfig({
   appName: "mesh-room-soundtrack",
-  description: "Democratic room playlist: any peer queues, peers upvote, top is now playing.",
-  accentHex: "#9d6dff",
+  displayName: "Room Soundtrack",
+  visualProfile: "gather",
+  shellLayout: "inset",
+  description:
+    "A democratic shared listening queue: every person can add a track, vote, and agree on what comes next.",
+  accentHex: "#f0ba64",
   version: __APP_VERSION__,
   commit: __GIT_COMMIT__,
 });

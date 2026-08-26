@@ -12,5 +12,5 @@ steps:
       - npx playwright install --with-deps chromium
       - npm run fmt:check
       - npm run typecheck
-      - npm run test
+      - CI=true npm run test
       - npm run build

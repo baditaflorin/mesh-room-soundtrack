@@ -12,6 +12,10 @@ export default defineConfig({
   testDir: "./tests/e2e",
   timeout: 30_000,
   expect: { timeout: 5_000 },
+  // Several scenarios bring up two Yjs/WebRTC peers. Keeping the suite
+  // serial prevents independent spec files from competing for BroadcastChannel
+  // lifecycle timing on CI runners with many CPU workers.
+  workers: 1,
   fullyParallel: false,
   reporter: process.env["CI"] ? "list" : [["list"], ["json", { outputFile: "test-results.json" }]],
   use: {

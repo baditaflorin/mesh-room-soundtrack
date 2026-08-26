@@ -1,5 +1,5 @@
-/* App-local styles. Mesh chrome (settings drawer, self-ref bar) is provided by
- * @baditaflorin/mesh-common/styles.css imported in main.tsx. */
+/* App-local styling for Room Soundtrack. Shared shell, controls, tokens and
+ * accessible foundations are supplied by @baditaflorin/mesh-common. */
 
 :root {
   color-scheme: dark;
@@ -12,158 +12,485 @@
 html,
 body,
 #root {
-  margin: 0;
-  padding: 0;
-  height: 100%;
   width: 100%;
+  min-height: 100%;
+  margin: 0;
   background: var(--mesh-bg);
   color: var(--mesh-fg);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--mesh-font-sans, ui-sans-serif, system-ui, sans-serif);
   -webkit-tap-highlight-color: transparent;
 }
 
-.feature-placeholder {
-  padding: 6rem 1.5rem 2rem;
+body {
+  background:
+    radial-gradient(circle at 82% -18%, rgb(240 186 100 / 14%), transparent 29rem),
+    radial-gradient(circle at -12% 42%, rgb(91 210 194 / 10%), transparent 34rem), var(--mesh-bg);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--mesh-accent) 75%, white);
+  outline-offset: 3px;
+}
+
+.soundtrack-page {
+  width: min(100%, 76rem);
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 0.6rem clamp(0.75rem, 2.5vw, 2rem) calc(4rem + env(safe-area-inset-bottom));
+}
+
+.soundtrack-page--connecting {
+  display: grid;
+  min-height: min(39rem, 100%);
+  place-items: center;
+}
+
+.soundtrack-connecting {
+  width: min(100%, 32rem);
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
 }
 
-.feature-placeholder h1 {
-  font-size: 1.6rem;
+.soundtrack-connecting h1,
+.soundtrack-connecting p {
   margin: 0;
-  color: var(--mesh-accent);
 }
 
-.feature-placeholder p {
-  max-width: 32rem;
-  margin: 0;
-  opacity: 0.85;
+.soundtrack-connecting h1 {
+  margin-top: 0.45rem;
+  font-size: clamp(1.7rem, 6vw, 2.6rem);
+  letter-spacing: -0.045em;
+}
+
+.soundtrack-connecting p {
+  max-width: 28rem;
+  margin: 0.75rem auto 1.1rem;
+  color: var(--mesh-muted);
   line-height: 1.5;
 }
 
-.feature-status {
-  font-size: 0.85rem;
-  opacity: 0.6;
+.soundtrack-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.35rem 0 1rem;
+}
+
+.soundtrack-hero-copy {
+  max-width: 43rem;
+}
+
+.soundtrack-kicker,
+.track-now-label {
+  display: block;
+  color: var(--mesh-accent);
+  font-size: 0.67rem;
+  font-weight: 760;
+  letter-spacing: 0.13em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.soundtrack-hero h1 {
+  max-width: 12ch;
+  margin: 0.36rem 0 0;
+  color: var(--mesh-fg);
+  font-size: clamp(1.8rem, 4.2vw, 3.35rem);
+  font-weight: 760;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.soundtrack-hero p {
+  max-width: 39rem;
+  margin: 0.7rem 0 0;
+  color: var(--mesh-muted);
+  font-size: clamp(0.86rem, 1.4vw, 1rem);
+  line-height: 1.5;
+}
+
+.soundtrack-stats {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  padding-bottom: 0.12rem;
+}
+
+.soundtrack-workspace {
+  display: grid;
+  grid-template-areas:
+    "stage composer"
+    "queue queue";
+  grid-template-columns: minmax(0, 1.12fr) minmax(21rem, 0.88fr);
+  align-items: start;
+  gap: clamp(0.75rem, 1.8vw, 1.25rem);
+}
+
+.track-stage {
+  grid-area: stage;
+  position: relative;
+  overflow: hidden;
+  min-height: 21rem;
+  border-color: color-mix(in srgb, var(--mesh-accent) 28%, var(--mesh-border));
+  background:
+    linear-gradient(145deg, rgb(5 25 31 / 5%), rgb(5 13 19 / 35%)), var(--mesh-surface-raised);
+  box-shadow: var(--mesh-shadow);
+}
+
+.track-stage::after {
+  position: absolute;
+  right: -10%;
+  bottom: -42%;
+  width: 18rem;
+  height: 18rem;
+  border: 1px solid rgb(240 186 100 / 26%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1.8rem rgb(240 186 100 / 5%),
+    0 0 0 3.6rem rgb(240 186 100 / 4%);
+  content: "";
+  pointer-events: none;
+}
+
+.track-stage-topline,
+.track-now,
+.track-empty,
+.track-stage-note {
+  position: relative;
+  z-index: 1;
+}
+
+.track-stage-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: clamp(1rem, 2vw, 1.35rem) clamp(1rem, 2.4vw, 1.55rem) 0;
+}
+
+.track-vote-summary {
+  color: var(--mesh-muted);
+  font-size: 0.76rem;
   font-variant-numeric: tabular-nums;
 }
 
-.track-screen {
-  max-width: 38rem;
-  margin: 0 auto;
-  padding: 4.5rem 1rem 3rem;
+.track-now,
+.track-empty {
   display: flex;
-  flex-direction: column;
+  min-height: 12.8rem;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 1.7rem);
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1rem, 2.6vw, 1.6rem);
+}
+
+.track-now-art,
+.track-empty-mark {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: end;
+  justify-content: center;
+  gap: 0.28rem;
+  width: clamp(4.5rem, 9vw, 6.5rem);
+  height: clamp(4.5rem, 9vw, 6.5rem);
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--mesh-accent) 44%, var(--mesh-border));
+  border-radius: 1.35rem;
+  background:
+    linear-gradient(140deg, rgb(240 186 100 / 26%), rgb(83 205 190 / 10%)),
+    color-mix(in srgb, var(--mesh-surface) 52%, transparent);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 10%);
+}
+
+.track-now-art span,
+.track-empty-mark span {
+  display: block;
+  width: 0.52rem;
+  border-radius: 999px;
+  background: var(--mesh-accent);
+  box-shadow: 0 0 0.85rem rgb(240 186 100 / 20%);
+}
+
+.track-now-art span:nth-child(1),
+.track-empty-mark span:nth-child(1) {
+  height: 38%;
+}
+
+.track-now-art span:nth-child(2),
+.track-empty-mark span:nth-child(2) {
+  height: 72%;
+}
+
+.track-now-art span:nth-child(3),
+.track-empty-mark span:nth-child(3) {
+  height: 51%;
+}
+
+.track-now-copy,
+.track-empty > div:last-child {
+  min-width: 0;
+}
+
+.track-now-title {
+  overflow: hidden;
+  color: var(--mesh-fg);
+  font-size: clamp(1.55rem, 3vw, 2.75rem);
+  font-weight: 750;
+  letter-spacing: -0.052em;
+  line-height: 1.03;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-now-sub {
+  margin-top: 0.35rem;
+  color: var(--mesh-accent);
+  font-size: clamp(0.95rem, 1.7vw, 1.2rem);
+  font-weight: 620;
+}
+
+.track-now p,
+.track-empty p {
+  margin: 0.8rem 0 0;
+  color: var(--mesh-muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.track-now p strong {
+  color: var(--mesh-fg);
+  font-weight: 650;
+}
+
+.track-now a {
+  color: var(--mesh-accent);
+  font-weight: 700;
+  text-underline-offset: 0.18em;
+}
+
+.track-empty h2,
+.track-composer h2,
+.track-queue-heading h2 {
+  margin: 0;
+  color: var(--mesh-fg);
+  font-size: 1.05rem;
+  letter-spacing: -0.025em;
+}
+
+.track-stage-note {
+  margin: 0;
+  padding: 0.85rem clamp(1rem, 2.4vw, 1.55rem) 1.15rem;
+  border-top: 1px solid color-mix(in srgb, var(--mesh-border) 70%, transparent);
+  color: var(--mesh-muted);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.track-composer {
+  grid-area: composer;
+  border-color: color-mix(in srgb, var(--mesh-accent) 40%, var(--mesh-border));
+  box-shadow: 0 1.2rem 3rem rgb(0 10 14 / 20%);
+}
+
+.track-composer-heading,
+.track-queue-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
   gap: 1rem;
 }
 
-.track-header {
-  text-align: center;
+.track-composer-heading {
+  margin-bottom: 0.85rem;
 }
 
-.track-header h1 {
-  margin: 0;
+.track-composer-heading .soundtrack-kicker,
+.track-queue-heading .soundtrack-kicker {
+  margin-bottom: 0.26rem;
+}
+
+.track-composer-step {
+  display: grid;
+  width: 2.1rem;
+  height: 2.1rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--mesh-accent) 40%, var(--mesh-border));
+  border-radius: 50%;
   color: var(--mesh-accent);
-  font-size: 1.5rem;
-}
-
-.track-status {
-  font-size: 0.85rem;
-  opacity: 0.65;
-  margin: 0.25rem 0 0;
+  font-size: 0.67rem;
   font-variant-numeric: tabular-nums;
-}
-
-.track-name input,
-.track-submit-row input {
-  width: 100%;
-  padding: 0.55rem 0.75rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 0.5rem;
-  color: var(--mesh-fg);
-  font-size: 0.95rem;
+  font-weight: 760;
 }
 
 .track-submit-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+  gap: 0.58rem;
 }
 
-.track-submit-row .track-input-url {
+.track-name,
+.track-source-details,
+.track-submit {
   grid-column: 1 / -1;
+}
+
+.track-source-details {
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--mesh-border) 78%, transparent);
+  border-radius: 0.72rem;
+  background: color-mix(in srgb, var(--mesh-surface) 48%, transparent);
+}
+
+.track-source-details summary {
+  display: flex;
+  min-height: 2.45rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.76rem;
+  color: var(--mesh-muted);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 650;
+  list-style: none;
+}
+
+.track-source-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.track-source-details summary::before {
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-right: 0.04rem;
+  border-right: 1px solid currentcolor;
+  border-bottom: 1px solid currentcolor;
+  content: "";
+  transform: rotate(-45deg);
+  transition: transform 150ms ease;
+}
+
+.track-source-details[open] summary::before {
+  transform: rotate(45deg);
+}
+
+.track-source-details summary em {
+  margin-left: auto;
+  color: color-mix(in srgb, var(--mesh-muted) 76%, transparent);
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 560;
+}
+
+.track-source-details .track-field {
+  display: block;
+  padding: 0 0.58rem 0.58rem;
+}
+
+.track-name .mesh-name-input-label,
+.track-field > span {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem;
+  margin: 0 0 0.3rem;
+  color: var(--mesh-muted);
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.track-field > span em {
+  color: color-mix(in srgb, var(--mesh-muted) 75%, transparent);
+  font-size: 0.67rem;
+  font-style: normal;
+  font-weight: 560;
+}
+
+.track-name .mesh-name-input-field,
+.track-field input {
+  width: 100%;
+  min-height: 2.66rem;
+  padding: 0.62rem 0.76rem;
+  border: 1px solid var(--mesh-border);
+  border-radius: 0.72rem;
+  background: color-mix(in srgb, var(--mesh-surface) 78%, transparent);
+  color: var(--mesh-fg);
+  font-size: 0.9rem;
+  line-height: 1.2;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.track-name .mesh-name-input-field::placeholder,
+.track-field input::placeholder {
+  color: color-mix(in srgb, var(--mesh-muted) 72%, transparent);
+}
+
+.track-name .mesh-name-input-field:hover,
+.track-field input:hover {
+  border-color: color-mix(in srgb, var(--mesh-accent) 50%, var(--mesh-border));
+}
+
+.track-name .mesh-name-input-field:focus,
+.track-field input:focus {
+  border-color: var(--mesh-accent);
+  background: var(--mesh-surface-raised);
+  box-shadow: 0 0 0 0.2rem rgb(240 186 100 / 13%);
+  outline: 0;
 }
 
 .track-submit {
-  grid-column: 1 / -1;
-  padding: 0.65rem;
-  border: 0;
-  border-radius: 0.5rem;
-  background: var(--mesh-accent);
-  color: #111;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s;
+  margin-top: 0.16rem;
 }
 
-.track-submit:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.track-queue-panel {
+  grid-area: queue;
+  overflow: hidden;
 }
 
-.track-now {
-  padding: 1rem 1.1rem;
-  border-radius: 0.75rem;
-  background: rgba(157, 109, 255, 0.14);
-  border: 1px solid rgba(157, 109, 255, 0.35);
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+.track-queue-heading {
+  align-items: center;
+  padding: 1rem clamp(1rem, 2.4vw, 1.4rem);
+  border-bottom: 1px solid color-mix(in srgb, var(--mesh-border) 75%, transparent);
 }
 
-.track-now-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  opacity: 0.7;
-  color: var(--mesh-accent);
-}
-
-.track-now-title {
-  font-size: 1.35rem;
-  font-weight: 600;
-}
-
-.track-now-sub {
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
-
-.track-now-sub a {
-  color: var(--mesh-accent);
+.track-queue-heading > span {
+  color: var(--mesh-muted);
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .track-queue {
-  list-style: none;
-  padding: 0;
+  display: grid;
+  gap: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  padding: 0;
+  list-style: none;
 }
 
 .track-row {
   display: grid;
-  grid-template-columns: 1fr auto auto auto;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 0.75rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.5rem;
+  gap: 0.55rem;
+  min-height: 4.15rem;
+  padding: 0.67rem clamp(0.82rem, 2vw, 1.4rem);
+  border-bottom: 1px solid color-mix(in srgb, var(--mesh-border) 62%, transparent);
+}
+
+.track-row:last-child {
+  border-bottom: 0;
 }
 
 .track-meta {
@@ -171,49 +498,230 @@ body,
 }
 
 .track-title {
-  font-weight: 500;
   overflow: hidden;
+  color: var(--mesh-fg);
+  font-size: 0.93rem;
+  font-weight: 680;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .track-sub {
-  font-size: 0.8rem;
-  opacity: 0.65;
   overflow: hidden;
+  margin-top: 0.18rem;
+  color: var(--mesh-muted);
+  font-size: 0.77rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .track-score {
-  font-variant-numeric: tabular-nums;
-  padding: 0.15rem 0.5rem;
-  background: rgba(255, 255, 255, 0.08);
+  min-width: 2rem;
+  padding: 0.25rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--mesh-border) 78%, transparent);
   border-radius: 999px;
-  font-size: 0.8rem;
-  min-width: 1.75rem;
+  background: color-mix(in srgb, var(--mesh-surface-raised) 65%, transparent);
+  color: var(--mesh-fg);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
   text-align: center;
 }
 
-.track-btn {
-  width: 2rem;
-  height: 2rem;
+.track-btn.mesh-button {
+  width: 2.32rem;
+  min-width: 2.32rem;
+  min-height: 2.32rem;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 0.4rem;
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--mesh-fg);
-  cursor: pointer;
-  transition: opacity 0.15s;
+  border-radius: 0.68rem;
+  color: var(--mesh-muted);
 }
 
-.track-btn:disabled {
-  opacity: 0.25;
-  cursor: not-allowed;
+.track-btn.mesh-button:hover:not(:disabled),
+.track-btn.mesh-button.track-btn-on {
+  border-color: color-mix(in srgb, var(--mesh-accent) 55%, var(--mesh-border));
+  background: color-mix(in srgb, var(--mesh-accent) 16%, var(--mesh-surface-raised));
+  color: var(--mesh-accent);
 }
 
-.track-btn-on {
-  background: var(--mesh-accent);
-  color: #111;
-  border-color: var(--mesh-accent);
+.track-btn.mesh-button:disabled {
+  opacity: 0.36;
+}
+
+.track-queue-empty {
+  margin: 0;
+  padding: 1.05rem clamp(1rem, 2.4vw, 1.4rem) 1.2rem;
+  color: var(--mesh-muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+/* A short landscape laptop should still land the shared action in the first
+ * frame. Keep the roomy default for taller desktops, then tighten only the
+ * vertical rhythm when viewport height—not product density—demands it. */
+@media (min-width: 48.0625rem) and (max-height: 42rem) {
+  .soundtrack-page {
+    padding-top: 0.35rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .soundtrack-hero {
+    padding-bottom: 0.64rem;
+  }
+
+  .soundtrack-hero h1 {
+    font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  }
+
+  .track-composer {
+    padding: 0.72rem;
+  }
+
+  .track-composer-heading {
+    margin-bottom: 0.58rem;
+  }
+
+  .track-submit-row {
+    gap: 0.42rem;
+  }
+
+  .track-name .mesh-name-input-field,
+  .track-field input {
+    min-height: 2.38rem;
+    padding: 0.48rem 0.66rem;
+  }
+
+  .track-source-details summary {
+    min-height: 2.2rem;
+    padding-block: 0.42rem;
+  }
+
+  .track-submit {
+    min-height: 2.5rem;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 48rem) {
+  .soundtrack-workspace {
+    grid-template-areas:
+      "stage"
+      "composer"
+      "queue";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .track-stage {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 31rem) {
+  .soundtrack-page {
+    padding-top: 0.32rem;
+    padding-inline: 0.72rem;
+  }
+
+  .soundtrack-hero {
+    align-items: start;
+    flex-direction: column;
+    gap: 0.42rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.68rem;
+  }
+
+  .soundtrack-hero h1 {
+    font-size: clamp(1.75rem, 9.3vw, 2.25rem);
+  }
+
+  .soundtrack-stats {
+    justify-content: flex-start;
+  }
+
+  .soundtrack-hero p {
+    display: none;
+  }
+
+  .track-stage-topline {
+    padding-top: 0.9rem;
+  }
+
+  .track-now,
+  .track-empty {
+    min-height: 7.15rem;
+    gap: 0.85rem;
+    padding-block: 0.78rem;
+  }
+
+  .track-now-art,
+  .track-empty-mark {
+    width: 4.25rem;
+    height: 4.25rem;
+    padding: 0.72rem;
+    border-radius: 1.05rem;
+  }
+
+  .track-now-title {
+    font-size: 1.48rem;
+  }
+
+  .track-now p,
+  .track-empty p {
+    margin-top: 0.45rem;
+    font-size: 0.78rem;
+  }
+
+  .track-empty p {
+    display: none;
+  }
+
+  .track-stage-note {
+    padding-top: 0.58rem;
+    padding-bottom: 0.66rem;
+    font-size: 0.7rem;
+  }
+
+  .track-composer {
+    padding: 0.86rem;
+  }
+
+  .track-composer-heading {
+    margin-bottom: 0.68rem;
+  }
+
+  .track-submit {
+    margin-top: 0;
+  }
+
+  .track-submit-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .track-name,
+  .track-source-details,
+  .track-submit {
+    grid-column: auto;
+  }
+
+  .track-row {
+    gap: 0.38rem;
+    padding-inline: 0.72rem;
+  }
+
+  .track-score {
+    min-width: 1.74rem;
+    padding-inline: 0.3rem;
+  }
+
+  .track-btn.mesh-button {
+    width: 2.18rem;
+    min-width: 2.18rem;
+    min-height: 2.18rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track-name .mesh-name-input-field,
+  .track-field input {
+    transition: none;
+  }
 }
